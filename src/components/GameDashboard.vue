@@ -79,17 +79,5 @@ defineProps<{
 	&__end {
 		justify-self: end;
 	}
-
-	:deep(.az-tile) {
-		width: 20px;
-		height: 20px;
-		border: 0;
-
-		.az-tile__inner {
-			width: 20px;
-			height: 20px;
-			border-width: 5px;
-		}
-	}
 }
 </style>
