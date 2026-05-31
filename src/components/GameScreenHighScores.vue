@@ -25,7 +25,9 @@
 import { computed } from 'vue'
 import { use7colorsScores } from '@/composables/use7colorsScores'
 
-const emit = defineEmits(['close'])
+const emit = defineEmits<{
+	(e: 'close'): void
+}>()
 
 const { getScores, maxItems } = use7colorsScores()
 

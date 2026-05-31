@@ -1,6 +1,5 @@
 type ScoreItem = {
 	date: number
-	level: number
 	name: string
 	score: number
 }
@@ -40,7 +39,7 @@ export const use7colorsScores = () => {
 		return score > last.score
 	}
 
-	const addScore = (item: { level: number; name: string; score: number }) => {
+	const addScore = (item: { name: string; score: number }) => {
 		const list = getScores()
 
 		const next: ScoreItem[] = [
