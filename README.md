@@ -2,7 +2,8 @@
 
 ## Screenshot
 
-![Vue.js 7 Colors](https://raw.githubusercontent.com/annaziarkiewicz/vue-7-colors/refs/heads/main/screenshot.png)
+![Vue.js 7 Colors welcome screen](https://raw.githubusercontent.com/annaziarkiewicz/vue-7-colors/refs/heads/main/screenshot-1.png)
+![Vue.js 7 Colors game screenshot](https://raw.githubusercontent.com/annaziarkiewicz/vue-7-colors/refs/heads/main/screenshot-2.png)
 
 
 ## Required environment
