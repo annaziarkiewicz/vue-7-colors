@@ -68,7 +68,9 @@ import GameScreenMouse from '@/components/GameScreenMouse.vue'
 
 import { colors } from '@/composables/use7colorsMap'
 
-const emit = defineEmits(['close'])
+const emit = defineEmits<{
+	(e: 'close'): void
+}>()
 </script>
 
 <style lang="scss" scoped>
