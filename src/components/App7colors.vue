@@ -1,20 +1,20 @@
 <template>
 	<section class="az-game">
 		<GameDashboard
-			:currentTurn="currentTurn"
+			:current-turn="currentTurn"
 			:score="score"
 			:time="time"
 		/>
 
 		<GameBoard
 			:key="gameBoardKey"
-			:actionDelay="gameActionDelay"
+			:action-delay="gameActionDelay"
 			:paused="gameState.paused || gameState.screen !== 'game' || isGameFrozen"
 			@draw="onGameDraw"
 			@lost="onGameLost"
-			@update:aiScore="onAiScore"
-			@update:aiTiles="score.aiTiles = $event"
-			@update:playerTiles="score.playerTiles = $event"
+			@update:ai-score="onAiScore"
+			@update:ai-tiles="score.aiTiles = $event"
+			@update:player-tiles="score.playerTiles = $event"
 			@update:score="onPlayerScore"
 			@update:time="time = $event"
 			@update:turn="currentTurn = $event"
@@ -236,7 +236,6 @@ const onGameDraw = () => {
 
 const onScoreSubmit = (name: string) => {
 	addScore({
-		level: 1,
 		name,
 		score: score.value.playerTiles
 	})
