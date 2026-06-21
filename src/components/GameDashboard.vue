@@ -9,7 +9,7 @@
 			<GameDashboardTurn :current-turn="currentTurn" />
 
 			<div
-				v-if="currentTurn === 'ai'"
+				v-if="showOverlay"
 				class="az-dashboard__center-overlay"
 			>
 				AI score: {{ score.ai }}%
@@ -36,6 +36,7 @@ defineProps<{
 	currentTurn: Turn
 	score: Score
 	time: number
+    showOverlay: boolean
 }>()
 </script>
 
@@ -64,10 +65,10 @@ defineProps<{
 
 		&-overlay {
 			position: absolute;
-			left: 0;
-			right: 0;
-			z-index: 1;
-			height: 24px;
+            top: 24px;
+            inset-inline: 0;
+            z-index: 1;
+            height: 24px;
 			display: flex;
 			align-items: center;
 			justify-content: center;

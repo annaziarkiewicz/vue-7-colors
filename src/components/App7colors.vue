@@ -4,6 +4,7 @@
 			:current-turn="currentTurn"
 			:score="score"
 			:time="time"
+            :show-overlay="gameState.screen === 'game'"
 		/>
 
 		<GameBoard
