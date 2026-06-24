@@ -1,8 +1,7 @@
 <template>
 	<div class="az-dashboard">
 		<div class="az-dashboard__start">
-			Score: {{ score.player }}%
-			<span>({{ score.playerTiles }} tiles)</span>
+            Captured: {{ score.player }}% | Score: {{ score.playerTiles }}
 		</div>
 
 		<div class="az-dashboard__center">
@@ -12,16 +11,12 @@
 				v-if="showOverlay"
 				class="az-dashboard__center-overlay"
 			>
-				AI score: {{ score.ai }}%
-				<span>({{ score.aiTiles }} tiles)</span>
+				AI Captured: {{ score.ai }}% | Score: {{ score.aiTiles }}
 			</div>
 		</div>
 
 		<div class="az-dashboard__end">
-			<GameDashboardTimer
-				align="center"
-				:time="time"
-			/>
+			<GameDashboardTimer label="Time left" :time="time" />
 		</div>
 	</div>
 </template>
@@ -35,8 +30,8 @@ import type { Score, Turn } from '@/types/7colors'
 defineProps<{
 	currentTurn: Turn
 	score: Score
-	time: number
     showOverlay: boolean
+	time: number
 }>()
 </script>
 
@@ -54,10 +49,6 @@ defineProps<{
 
 	&__start {
 		justify-self: start;
-
-		span {
-			color: $color-milk-500;
-		}
 	}
 
 	&__center {
