@@ -40,7 +40,6 @@ const emit = defineEmits<{
 
 const game = use7colorsGame(props.actionDelay, toRef(props, 'paused'))
 const resultEmitted = ref(false)
-const total = game.cols * game.rows
 
 const isTileBlocked = (cell: string) => {
 	return !props.paused && game.currentTurn.value === 'player' && cell === game.blockedColor.value
@@ -75,14 +74,11 @@ const emitGameResult = () => {
 	}
 }
 
-watch([game.playerTiles, game.aiTiles], () => {
-	const aiScore = Math.floor((game.aiTiles.value / total) * 100)
-	const playerScore = Math.floor((game.playerTiles.value / total) * 100)
-
-	emit('update:aiScore', aiScore)
-	emit('update:aiTiles', game.aiTiles.value)
-	emit('update:playerTiles', game.playerTiles.value)
-	emit('update:score', playerScore)
+watch(game.score, value => {
+	emit('update:aiScore', value.ai)
+	emit('update:aiTiles', value.aiTiles)
+	emit('update:playerTiles', value.playerTiles)
+	emit('update:score', value.player)
 }, { immediate: true })
 
 watch(game.currentTurn, () => {

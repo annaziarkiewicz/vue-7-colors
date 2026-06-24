@@ -3,7 +3,7 @@ import { computed, ref, watch, type Ref } from 'vue'
 import { use7colorsAI } from '@/composables/use7colorsAI'
 import { use7colorsMap } from '@/composables/use7colorsMap'
 
-import type { Turn } from '@/types/7colors'
+import type { Score, Turn } from '@/types/7colors'
 
 type GameResult = 'ai' | 'draw' | 'player' | null
 
@@ -22,15 +22,28 @@ export const use7colorsGame = (gameActionDelay: number, paused: Ref<boolean>) =>
 	const { getBestColor } = use7colorsAI()
 
 	const aiIndex = cols * rows - 1
+	const target = 50
 	const total = cols * rows
 
 	const aiTiles = ref(0)
 	const currentTurn = ref<Turn>('player')
+	const hasMoved = ref({
+		ai: false,
+		player: false
+	})
 	const isDraw = ref(false)
 	const noMoves = ref(false)
 	const playerTiles = ref(0)
 	const turnTime = ref(30)
 	const winner = ref<Turn | null>(null)
+
+	const score = computed<Score>(() => ({
+		ai: hasMoved.value.ai ? Math.floor((aiTiles.value / total) * 100) : 0,
+		aiTiles: hasMoved.value.ai ? aiTiles.value : 0,
+		player: hasMoved.value.player ? Math.floor((playerTiles.value / total) * 100) : 0,
+		playerTiles: hasMoved.value.player ? playerTiles.value : 0,
+		target
+	}))
 
 	const blockedColor = computed(() => {
 		if (currentTurn.value === 'player') return cells.value[aiIndex] || null
@@ -146,6 +159,7 @@ export const use7colorsGame = (gameActionDelay: number, paused: Ref<boolean>) =>
 
 			currentTurn.value = 'ai'
 			turnTime.value = 30
+
 			scheduleAiMove()
 		}, 1000)
 	}
@@ -178,7 +192,13 @@ export const use7colorsGame = (gameActionDelay: number, paused: Ref<boolean>) =>
 
 		stopTimer()
 
+		const previousColor = cells.value[0]
+
 		floodFill(0, color)
+
+		if (cells.value[0] !== previousColor) {
+			hasMoved.value.player = true
+		}
 
 		currentTurn.value = 'ai'
 		turnTime.value = 30
@@ -202,8 +222,13 @@ export const use7colorsGame = (gameActionDelay: number, paused: Ref<boolean>) =>
 			getBestColor(region, cells.value, getNeighbors, cells.value[0]) ||
 			colors.find(color => color !== cells.value[aiIndex] && color !== cells.value[0]) ||
 			cells.value[aiIndex]
+		const previousColor = cells.value[aiIndex]
 
 		floodFill(aiIndex, bestColor)
+
+		if (cells.value[aiIndex] !== previousColor) {
+			hasMoved.value.ai = true
+		}
 
 		currentTurn.value = 'player'
 
@@ -251,6 +276,7 @@ export const use7colorsGame = (gameActionDelay: number, paused: Ref<boolean>) =>
 		noMoves,
 		playerTiles,
 		rows,
+		score,
 		stopAll,
 		turnTime,
 		winner
